@@ -1,59 +1,89 @@
 ﻿
 
-namespace ArraysApp
+namespace LotteryApp
 {
-    internal class Program
+    /* EXAMPLE OF USAGE:
+     * Fill the lottery!
+        Enter 5 numbers:
+        5
+        6
+        7
+        8
+        9
+        Your lottery ticket is:
+        5 6 7 8 9 Lottery wining numbers is:
+        1
+        2
+        3
+        4
+        5
+        Lets check your lottery ticket!
+        You guessed no numbers. No price for you, you should try better!
+     * 
+     */
+
+
+    public class Program
     {
         private static void Main(string[] args)
         {
-            int ticketSize = 5;
-            int[] ticket = new int[ticketSize];
+            //size will be always 5 or more
+            int size = 5;
 
-            Console.Write("Fill the lottery!\nEnter "+ticketSize+" numbers:\n");
- 
-            //לולאה לקליטת כל ערכי המערך
+            //get ticket
+            int[] ticket = new int[size];
+
+            //fill ticket
+            Console.WriteLine("Enter "+ticket.Length+" numbers:");
+            for(int i=0; i < ticket.Length; i++)
+            {
+                ticket[i] = int.Parse(Console.ReadLine());
+            }
+
+            Console.WriteLine("Here is your ticket:");
             for (int i = 0; i < ticket.Length; i++)
             {
-                ticket[i] = int.Parse(Console.ReadLine()); // שיטה שקולטת מספר שלם מהמשתמש
+                Console.Write(ticket[i]+" ");
             }
 
-            Console.Write("Your lottery ticket is:\n");
-            for (int i = 0; i < ticket.Length; i++)
+
+            //get winning numbers
+            int[] winningNumbers = new int[size];
+            Console.WriteLine("\nEnter " + winningNumbers.Length + " WINNING numbers:");
+            for (int i = 0; i < winningNumbers.Length; i++)
             {
-                Console.Write( ticket[i]+" ");
+                winningNumbers[i] = int.Parse(Console.ReadLine());
             }
 
-            Console.Write("Lottery wining numbers is:\n");
-            int[] winning = new int[ticketSize];
-            for (int i = 0; i < winning.Length; i++)
+            //compare ticket to winning numbers
+            //count matches
+            int matches = 0;
+            for(int i=0; i<ticket.Length; i++)
             {
-                winning[i] = int.Parse(Console.ReadLine());
-            }
+                int mynumber = ticket[i];
+                int winningNumber = winningNumbers[i];
 
-            Console.WriteLine("Lets check your lottery ticket! ");
-
-            int winCount = 0;
-            for (int i=0; i< winning.Length; i++)
-            {
-                int win = winning[i];
-                int num = ticket[i];
-                if (win == num)
+                if (mynumber == winningNumber)
                 {
-                    winCount++;
+                    matches++;
                 }
             }
 
-            if(winCount >= 5)
+            //get price accourding to your matches:
+            // 5 matches - you get a big price
+            // 1-4 matches - you get a small price
+            // no matches - no price
+            if (matches >= 5)
             {
-                Console.WriteLine("You guessed "+winCount+" numbers! You win the BIG PRICE!!!");
+                Console.WriteLine("You win the BIG PRICE!!!");
             }
-            else if (winCount <5 && winCount>0)
+            else if (matches == 0)
             {
-                Console.WriteLine("You guessed \"+winCount+\" numbers. You win the small and cute price!!!");
+                Console.WriteLine("No price for you!!");
             }
-            else
+            else 
             {
-                Console.WriteLine("You guessed no numbers. No price for you, you should try better!");
+                Console.WriteLine("You win the small price");
             }
         }
     }
